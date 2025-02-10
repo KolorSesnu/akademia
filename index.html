@@ -5,12 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kurs Psychoedukacyjny</title>
     <style>
-        body {
+        body 
+      {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #e6f4d7;
             text-align: center;
+        } 
+      .counter-container {
+            background: #c27ba0;
+            padding: 20px;
+            font-size: 32px;
+            color: #333;
+            font-weight: bold;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+       .counter-box {
+            perspective: 1000px;
+            display: flex;
+        }
+       .counter-digit {
+            display: inline-block;
+            width: 50px;
+            height: 60px;
+            background: white;
+            color: #333;
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 60px;
+            margin: 0 5px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            transform-style: preserve-3d;
+            transform-origin: center;
+            transition: transform 0.5s ease-in-out;
+        }
+        .flipping {
+            transform: rotateX(-180deg);
         }
         .container {
             max-width: 800px;
@@ -21,6 +58,7 @@
             border-radius: 8px; 
             text-align: center;
         }
+      
         h1, h2, h3 {
             color: #333;
         }
@@ -97,13 +135,18 @@
 
       
         <div class="counter-container" id="counter-container" style="background: #c27ba0; padding: 20px; font-size: 32px; color: #333; font-weight: bold; border-radius: 8px; margin-top: 20px;">
-            Do tej pory zaufało nam już: <span id="counter">173</span> osób!
+            Do tej pory zaufało nam już: <div class="counter-box">
+                <span class="counter-digit" id="counter-hundreds">1</span>
+                <span class="counter-digit" id="counter-tens">7</span>
+                <span class="counter-digit" id="counter-ones">3</span>
+            </div> osób!
         </div>
         <div class="discount-container" id="discount-container" style="background: #ffe599; padding: 20px; font-size: 24px; font-weight: bold; border-radius: 8px; margin-top: 20px;">
             🎉🔥Kup do 23 lutego 2025 i otrzymaj <strong>20% </strong> rabatu!
         </div>
         <p>Pozostały czas na skorzystanie z promocji:</p>
         <div id="countdown" style="font-size: 28px; font-weight: bold; color: #d32f2f; margin-top: 10px;"></div>
+    <img src="/Obrazki/kurs.png" alt="Darmowy Ebook" style="width: 100%; max-width: 400px; margin: 20px auto; display: block; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
         
         <h2>💡 Co da Tobie ten kurs?</h2>
         <div class="course-content course-content-1" style="background: #ead1dc; padding: 20px; border-radius: 8px; margin-top: 30px; text-align: left;">
@@ -124,7 +167,7 @@
         <h2>📚 8 KLUCZOWYCH ELEMENTÓW KURSU – CZEGO SIĘ NAUCZYSZ?</h2>
         <div class="course-content course-content-2" style="background: #d9ead3; padding: 20px; border-radius: 8px; margin-top: 30px; text-align: left;">
             <ul>
-                <li>Podstawy psychoneurobiologii
+                <li><strong>Podstawy psychoneurobiologii</strong>
                     Poznasz kluczowe mechanizmy działania mózgu, układu nerwowego i odpornościowego. Dowiesz się, jak psychika i biologia łączą się w jeden spójny system wpływający na zdrowie.</li>
                 <li>Stres i jego wpływ na organizm
                     Zrozumiesz, jak stres oddziałuje na ciało, w tym układ nerwowy, hormonalny i odpornościowy. Poznasz strategie regulacji emocji i mechanizmy radzenia sobie z napięciem.
@@ -151,7 +194,7 @@
         <div style="background-color: #6a89cc; color: white; padding: 30px; border-radius: 8px; margin-top: 30px;">
             <h2 style="font-size: 28px;">❓ Czy jeszcze zastanawiasz się nad zakupem kursu?</h2>
             <h3 style="font-size: 24px;">✨ Mam dla Ciebie pakiet korzyści! ✨</h3>
-            <img src="ebook-grafika.jpg" alt="Darmowy Ebook" style="width: 100%; max-width: 400px; margin: 20px auto; display: block; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
+            <img src="/Obrazki/workbook.jpg" alt="Darmowy Ebook" style="width: 100%; max-width: 400px; margin: 20px auto; display: block; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);">
             <p style="font-size: 22px; color: white;">Kup kurs już teraz i otrzymaj darmowego ebooka! 📖</p>
             <ul style="list-style: none; padding: 0; font-size: 20px; text-align: left; display: inline-block;">
                 <li>📜 Karty samorozwojowe do pracy nad sobą</li>
@@ -162,13 +205,33 @@
         </div>
         
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                let counter = 173;
-                function updateCounter() {
-                    document.getElementById("counter").textContent = counter;
-                    counter++;
+             document.addEventListener("DOMContentLoaded", function () {
+                let count = 173;
+                function setCounter() {
+                    let digits = count.toString().padStart(3, '0').split('');
+                    document.getElementById("counter-hundreds").textContent = digits[0];
+                    document.getElementById("counter-tens").textContent = digits[1];
+                    document.getElementById("counter-ones").textContent = digits[2];
                 }
-                setInterval(updateCounter, 420000);
+                setCounter();
+                function updateCounter() {
+                    count++;
+                    let digits = count.toString().padStart(3, '0').split('');
+                    let elements = [
+                        document.getElementById("counter-hundreds"),
+                        document.getElementById("counter-tens"),
+                        document.getElementById("counter-ones")
+                    ];
+                    elements.forEach((el, i) => {
+                        el.classList.add("flipping");
+                        setTimeout(() => {
+                            el.textContent = digits[i];
+                            el.classList.remove("flipping");
+                        }, 250);
+                    });
+                }
+                setInterval(updateCounter, 10000); // Aktualizacja co 7 minut
+            
 
                 function updateCountdown() {
                     const deadline = new Date("February 23, 2025 23:59:59").getTime();
